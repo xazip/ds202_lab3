@@ -1,0 +1,11 @@
+---
+title: "Individual1 Lab 3"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### First Push code.  This is just for setting up the Repository. 
+
