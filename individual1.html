@@ -190,6 +190,218 @@ $(document).ready(function () {
 
 <div id="first-push-code.-this-is-just-for-setting-up-the-repository." class="section level3">
 <h3>First Push code. This is just for setting up the Repository.</h3>
+<pre class="r"><code>#install.packages(&quot;devtools&quot;)
+#devtools::install_github(&quot;hadley/productplots&quot;)</code></pre>
+<pre class="r"><code>data(happy, package = &quot;productplots&quot;)
+head(happy)</code></pre>
+<pre><code>##   id         happy year age    sex       marital         degree
+## 1  1 not too happy 1972  23 female never married       bachelor
+## 2  2 not too happy 1972  70   male       married lt high school
+## 3  3  pretty happy 1972  48 female       married    high school
+## 4  4 not too happy 1972  27 female       married       bachelor
+## 5  5  pretty happy 1972  61 female       married    high school
+## 6  6  pretty happy 1972  26   male never married    high school
+##         finrela    health wtssall
+## 1       average      good  0.4446
+## 2 above average      fair  0.8893
+## 3       average excellent  0.8893
+## 4       average      good  0.8893
+## 5 above average      good  0.8893
+## 6 above average      good  0.4446</code></pre>
+<pre class="r"><code>HAPPY &lt;- readRDS(&quot;HAPPY.rds&quot;)
+head(HAPPY, 5)</code></pre>
+<pre><code>##           HAPPY YEAR AGE    SEX       MARITAL         DEGREE       FINRELA
+## 1 NOT TOO HAPPY 1972  23 FEMALE NEVER MARRIED       BACHELOR       AVERAGE
+## 2 NOT TOO HAPPY 1972  70   MALE       MARRIED LT HIGH SCHOOL ABOVE AVERAGE
+## 3  PRETTY HAPPY 1972  48 FEMALE       MARRIED    HIGH SCHOOL       AVERAGE
+## 4 NOT TOO HAPPY 1972  27 FEMALE       MARRIED       BACHELOR       AVERAGE
+## 5  PRETTY HAPPY 1972  61 FEMALE       MARRIED    HIGH SCHOOL ABOVE AVERAGE
+##      HEALTH WTSSALL          PARTYID POLVIEWS
+## 1      GOOD  0.4446     IND,NEAR DEM      IAP
+## 2      FAIR  0.8893 NOT STR DEMOCRAT      IAP
+## 3 EXCELLENT  0.8893      INDEPENDENT      IAP
+## 4      GOOD  0.8893 NOT STR DEMOCRAT      IAP
+## 5      GOOD  0.8893  STRONG DEMOCRAT      IAP</code></pre>
+<pre class="r"><code># Info about  variables, gathered from the gssdata website.
+# HAPPY - General happiness.   (All years available)
+# YEAR - Gss year for this respondent.   (All years available)
+# AGE - Age of the respondent. (All years available)
+# SEX - Respondents sex (All years available)
+# MARITAL - Marital status (All years available)
+# DEGREE - Respondents highest degree   (All years available)
+# FINRELA - Opinion of family income   (All years available)
+# HEALTH - Condition of health   (Available 28 of 31 years recorded)
+# WTSSALL - Weight of variables   (Available 17 of the 31 years recorded )
+
+
+# [[[PARTYID]]] - Political party affiliation   (All years Available )
+
+# [[[POLVIEWS]]] - Think of self as liberal or conservative   ( Available 29 of 31 years)</code></pre>
+<pre class="r"><code>class(HAPPY) # Is a data.fraem</code></pre>
+<pre><code>## [1] &quot;data.frame&quot;</code></pre>
+<pre class="r"><code>str(HAPPY)</code></pre>
+<pre><code>## 'data.frame':    62466 obs. of  11 variables:
+##  $ HAPPY   : chr  &quot;NOT TOO HAPPY&quot; &quot;NOT TOO HAPPY&quot; &quot;PRETTY HAPPY&quot; &quot;NOT TOO HAPPY&quot; ...
+##  $ YEAR    : int  1972 1972 1972 1972 1972 1972 1972 1972 1972 1972 ...
+##  $ AGE     : chr  &quot;23&quot; &quot;70&quot; &quot;48&quot; &quot;27&quot; ...
+##  $ SEX     : chr  &quot;FEMALE&quot; &quot;MALE&quot; &quot;FEMALE&quot; &quot;FEMALE&quot; ...
+##  $ MARITAL : chr  &quot;NEVER MARRIED&quot; &quot;MARRIED&quot; &quot;MARRIED&quot; &quot;MARRIED&quot; ...
+##  $ DEGREE  : chr  &quot;BACHELOR&quot; &quot;LT HIGH SCHOOL&quot; &quot;HIGH SCHOOL&quot; &quot;BACHELOR&quot; ...
+##  $ FINRELA : chr  &quot;AVERAGE&quot; &quot;ABOVE AVERAGE&quot; &quot;AVERAGE&quot; &quot;AVERAGE&quot; ...
+##  $ HEALTH  : chr  &quot;GOOD&quot; &quot;FAIR&quot; &quot;EXCELLENT&quot; &quot;GOOD&quot; ...
+##  $ WTSSALL : num  0.445 0.889 0.889 0.889 0.889 ...
+##  $ PARTYID : chr  &quot;IND,NEAR DEM&quot; &quot;NOT STR DEMOCRAT&quot; &quot;INDEPENDENT&quot; &quot;NOT STR DEMOCRAT&quot; ...
+##  $ POLVIEWS: chr  &quot;IAP&quot; &quot;IAP&quot; &quot;IAP&quot; &quot;IAP&quot; ...</code></pre>
+<pre class="r"><code>head(HAPPY, 20)</code></pre>
+<pre><code>##            HAPPY YEAR AGE    SEX       MARITAL         DEGREE
+## 1  NOT TOO HAPPY 1972  23 FEMALE NEVER MARRIED       BACHELOR
+## 2  NOT TOO HAPPY 1972  70   MALE       MARRIED LT HIGH SCHOOL
+## 3   PRETTY HAPPY 1972  48 FEMALE       MARRIED    HIGH SCHOOL
+## 4  NOT TOO HAPPY 1972  27 FEMALE       MARRIED       BACHELOR
+## 5   PRETTY HAPPY 1972  61 FEMALE       MARRIED    HIGH SCHOOL
+## 6   PRETTY HAPPY 1972  26   MALE NEVER MARRIED    HIGH SCHOOL
+## 7  NOT TOO HAPPY 1972  28   MALE      DIVORCED    HIGH SCHOOL
+## 8  NOT TOO HAPPY 1972  27   MALE NEVER MARRIED       BACHELOR
+## 9   PRETTY HAPPY 1972  21 FEMALE NEVER MARRIED    HIGH SCHOOL
+## 10  PRETTY HAPPY 1972  30 FEMALE       MARRIED    HIGH SCHOOL
+## 11  PRETTY HAPPY 1972  30 FEMALE       MARRIED    HIGH SCHOOL
+## 12  PRETTY HAPPY 1972  56   MALE       MARRIED LT HIGH SCHOOL
+## 13  PRETTY HAPPY 1972  54   MALE       MARRIED LT HIGH SCHOOL
+## 14 NOT TOO HAPPY 1972  49 FEMALE      DIVORCED LT HIGH SCHOOL
+## 15    VERY HAPPY 1972  41   MALE       MARRIED LT HIGH SCHOOL
+## 16 NOT TOO HAPPY 1972  54   MALE       MARRIED    HIGH SCHOOL
+## 17    VERY HAPPY 1972  24   MALE       MARRIED    HIGH SCHOOL
+## 18    VERY HAPPY 1972  62 FEMALE       MARRIED LT HIGH SCHOOL
+## 19    VERY HAPPY 1972  46 FEMALE       MARRIED       BACHELOR
+## 20    VERY HAPPY 1972  21 FEMALE NEVER MARRIED    HIGH SCHOOL
+##          FINRELA    HEALTH WTSSALL            PARTYID POLVIEWS
+## 1        AVERAGE      GOOD  0.4446       IND,NEAR DEM      IAP
+## 2  ABOVE AVERAGE      FAIR  0.8893   NOT STR DEMOCRAT      IAP
+## 3        AVERAGE EXCELLENT  0.8893        INDEPENDENT      IAP
+## 4        AVERAGE      GOOD  0.8893   NOT STR DEMOCRAT      IAP
+## 5  ABOVE AVERAGE      GOOD  0.8893    STRONG DEMOCRAT      IAP
+## 6  ABOVE AVERAGE      GOOD  0.4446       IND,NEAR DEM      IAP
+## 7  ABOVE AVERAGE EXCELLENT  0.4446       IND,NEAR DEM      IAP
+## 8        AVERAGE      GOOD  0.4446       IND,NEAR DEM      IAP
+## 9        AVERAGE EXCELLENT  0.4446    STRONG DEMOCRAT      IAP
+## 10 BELOW AVERAGE      FAIR  0.8893    STRONG DEMOCRAT      IAP
+## 11       AVERAGE      GOOD  0.8893    STRONG DEMOCRAT      IAP
+## 12       AVERAGE      FAIR  1.3339 NOT STR REPUBLICAN      IAP
+## 13 BELOW AVERAGE EXCELLENT  0.8893    STRONG DEMOCRAT      IAP
+## 14       AVERAGE      GOOD  1.3339   NOT STR DEMOCRAT      IAP
+## 15       AVERAGE EXCELLENT  0.8893    STRONG DEMOCRAT      IAP
+## 16       AVERAGE      GOOD  0.8893    STRONG DEMOCRAT      IAP
+## 17       AVERAGE      FAIR  0.8893       IND,NEAR REP      IAP
+## 18       AVERAGE      FAIR  0.8893       IND,NEAR REP      IAP
+## 19 ABOVE AVERAGE EXCELLENT  1.3339       IND,NEAR DEM      IAP
+## 20 ABOVE AVERAGE      GOOD  1.7786       IND,NEAR REP      IAP</code></pre>
+<pre class="r"><code>tail(HAPPY, 20)</code></pre>
+<pre><code>##               HAPPY YEAR AGE    SEX       MARITAL         DEGREE
+## 62447    VERY HAPPY 2016  58 FEMALE       MARRIED    HIGH SCHOOL
+## 62448  PRETTY HAPPY 2016  62 FEMALE      DIVORCED       BACHELOR
+## 62449    VERY HAPPY 2016  34 FEMALE       MARRIED    HIGH SCHOOL
+## 62450  PRETTY HAPPY 2016  56   MALE       MARRIED JUNIOR COLLEGE
+## 62451  PRETTY HAPPY 2016  40   MALE       MARRIED LT HIGH SCHOOL
+## 62452    VERY HAPPY 2016  63 FEMALE       MARRIED    HIGH SCHOOL
+## 62453  PRETTY HAPPY 2016  40   MALE       MARRIED       BACHELOR
+## 62454  PRETTY HAPPY 2016  68   MALE       MARRIED LT HIGH SCHOOL
+## 62455  PRETTY HAPPY 2016  21   MALE NEVER MARRIED    HIGH SCHOOL
+## 62456  PRETTY HAPPY 2016  35 FEMALE     SEPARATED JUNIOR COLLEGE
+## 62457  PRETTY HAPPY 2016  41 FEMALE       MARRIED    HIGH SCHOOL
+## 62458 NOT TOO HAPPY 2016  56 FEMALE       MARRIED JUNIOR COLLEGE
+## 62459  PRETTY HAPPY 2016  57   MALE NEVER MARRIED    HIGH SCHOOL
+## 62460  PRETTY HAPPY 2016  68 FEMALE       MARRIED    HIGH SCHOOL
+## 62461    VERY HAPPY 2016  75 FEMALE       WIDOWED    HIGH SCHOOL
+## 62462  PRETTY HAPPY 2016  57 FEMALE       MARRIED       GRADUATE
+## 62463  PRETTY HAPPY 2016  77   MALE       WIDOWED    HIGH SCHOOL
+## 62464  PRETTY HAPPY 2016  87 FEMALE       MARRIED    HIGH SCHOOL
+## 62465    VERY HAPPY 2016  55 FEMALE       MARRIED    HIGH SCHOOL
+## 62466  PRETTY HAPPY 2016  72   MALE       MARRIED       BACHELOR
+##                 FINRELA    HEALTH   WTSSALL            PARTYID
+## 62447           AVERAGE      GOOD 0.9569935 NOT STR REPUBLICAN
+## 62448     BELOW AVERAGE EXCELLENT 0.9569935    STRONG DEMOCRAT
+## 62449           AVERAGE      GOOD 0.9569935        INDEPENDENT
+## 62450           AVERAGE      GOOD 0.9569935       IND,NEAR REP
+## 62451           AVERAGE      GOOD 0.9569935       IND,NEAR DEM
+## 62452           AVERAGE       IAP 0.9569935  STRONG REPUBLICAN
+## 62453           AVERAGE      GOOD 0.9569935       IND,NEAR REP
+## 62454           AVERAGE      FAIR 0.9569935   NOT STR DEMOCRAT
+## 62455           AVERAGE       IAP 1.4354903       IND,NEAR DEM
+## 62456           AVERAGE      FAIR 0.4784968   NOT STR DEMOCRAT
+## 62457     BELOW AVERAGE       IAP 0.9569935        INDEPENDENT
+## 62458     BELOW AVERAGE       IAP 0.9569935       IND,NEAR DEM
+## 62459     BELOW AVERAGE       IAP 1.5643634        INDEPENDENT
+## 62460           AVERAGE      GOOD 0.9569935       IND,NEAR DEM
+## 62461 FAR BELOW AVERAGE      GOOD 0.4784968        INDEPENDENT
+## 62462     ABOVE AVERAGE       IAP 0.9569935    STRONG DEMOCRAT
+## 62463     ABOVE AVERAGE      GOOD 0.4784968        OTHER PARTY
+## 62464           AVERAGE       IAP 0.9569935 NOT STR REPUBLICAN
+## 62465     BELOW AVERAGE      GOOD 0.9569935 NOT STR REPUBLICAN
+## 62466     ABOVE AVERAGE      GOOD 0.9569935        INDEPENDENT
+##                   POLVIEWS
+## 62447 SLGHTLY CONSERVATIVE
+## 62448    EXTREMELY LIBERAL
+## 62449             MODERATE
+## 62450             MODERATE
+## 62451             MODERATE
+## 62452             MODERATE
+## 62453             MODERATE
+## 62454             MODERATE
+## 62455              LIBERAL
+## 62456    EXTREMELY LIBERAL
+## 62457             MODERATE
+## 62458 SLGHTLY CONSERVATIVE
+## 62459 SLGHTLY CONSERVATIVE
+## 62460             MODERATE
+## 62461         CONSERVATIVE
+## 62462    EXTREMELY LIBERAL
+## 62463         CONSERVATIVE
+## 62464             MODERATE
+## 62465 SLGHTLY CONSERVATIVE
+## 62466 SLGHTLY CONSERVATIVE</code></pre>
+<pre class="r"><code>### Things to note from the start
+# HAPPY (Character)
+# YEAR (Integer)
+# AGE (Character) - seems a little weird
+# SEX (Character)
+# MARITAL (Character)
+# DEGREE (Character)
+# FINRELA (character)
+# HEALTH (character)
+# WTSSALL (numeric)
+# PARTYID (character)
+# POLVIEWS (Character)
+
+
+dim(HAPPY)  #62466 Rows and 11 Columns</code></pre>
+<pre><code>## [1] 62466    11</code></pre>
+<pre class="r"><code>names(HAPPY)</code></pre>
+<pre><code>##  [1] &quot;HAPPY&quot;    &quot;YEAR&quot;     &quot;AGE&quot;      &quot;SEX&quot;      &quot;MARITAL&quot;  &quot;DEGREE&quot;  
+##  [7] &quot;FINRELA&quot;  &quot;HEALTH&quot;   &quot;WTSSALL&quot;  &quot;PARTYID&quot;  &quot;POLVIEWS&quot;</code></pre>
+<pre class="r"><code>summary(HAPPY)</code></pre>
+<pre><code>##     HAPPY                YEAR          AGE                SEX           
+##  Length:62466       Min.   :1972   Length:62466       Length:62466      
+##  Class :character   1st Qu.:1984   Class :character   Class :character  
+##  Mode  :character   Median :1994   Mode  :character   Mode  :character  
+##                     Mean   :1994                                        
+##                     3rd Qu.:2006                                        
+##                     Max.   :2016                                        
+##    MARITAL             DEGREE            FINRELA         
+##  Length:62466       Length:62466       Length:62466      
+##  Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character  
+##                                                          
+##                                                          
+##                                                          
+##     HEALTH             WTSSALL         PARTYID            POLVIEWS        
+##  Length:62466       Min.   :0.3918   Length:62466       Length:62466      
+##  Class :character   1st Qu.:0.5501   Class :character   Class :character  
+##  Mode  :character   Median :0.9881   Mode  :character   Mode  :character  
+##                     Mean   :1.0000                                        
+##                     3rd Qu.:1.0985                                        
+##                     Max.   :8.7399</code></pre>
+<pre class="r"><code>80</code></pre>
+<pre><code>## [1] 80</code></pre>
 </div>
 
 
