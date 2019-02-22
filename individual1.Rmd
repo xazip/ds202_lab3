@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 #install.packages("devtools")
 #devtools::install_github("hadley/productplots")
 
-```
+``` 
 
 
 ```{r}
@@ -62,13 +62,31 @@ tail(HAPPY, 20)
 # POLVIEWS (Character)
 
 
-dim(HAPPY)  #62466 Rows and 11 Columns
 
+dim(HAPPY)  #62466 Rows and 11 Columns
+#HAPPY data.frame is in long format
 names(HAPPY)
 
 summary(HAPPY)
 
-80
+
 
 ```
 
+```{r}
+
+table(HAPPY$HAPPY)  #CHECK
+table(HAPPY$YEAR)   #CHECK
+table(HAPPY$AGE)    #DETECTED  (DK)
+table(HAPPY$SEX)    #CHECKED
+table(HAPPY$MARITAL)  # CHECKED
+table(HAPPY$DEGREE)   # DETECTED (DK)
+table(HAPPY$FINRELA)  # DETECTED (DK)
+table(HAPPY$HEALTH)   # DETECTED(DK, IAP)
+#table(HAPPY$WTSSALL)  # CHECKED
+table(HAPPY$PARTYID)   # DETECTED (DK)
+table(HAPPY$POLVIEWS)   # DETECTED (DK, IAP)
+
+# No "NA" values were detected.  This was verified above and also by viewing the global enviroment uisng the search bar. 
+
+```
