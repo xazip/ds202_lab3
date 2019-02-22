@@ -9,3 +9,66 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### First Push code.  This is just for setting up the Repository. 
 
+```{r}
+#install.packages("devtools")
+#devtools::install_github("hadley/productplots")
+
+```
+
+
+```{r}
+data(happy, package = "productplots")
+head(happy)
+```
+
+
+```{r}
+HAPPY <- readRDS("HAPPY.rds")
+head(HAPPY, 5)
+# Info about  variables, gathered from the gssdata website.
+# HAPPY - General happiness.   (All years available)
+# YEAR - Gss year for this respondent.   (All years available)
+# AGE - Age of the respondent. (All years available)
+# SEX - Respondents sex (All years available)
+# MARITAL - Marital status (All years available)
+# DEGREE - Respondents highest degree   (All years available)
+# FINRELA - Opinion of family income   (All years available)
+# HEALTH - Condition of health   (Available 28 of 31 years recorded)
+# WTSSALL - Weight of variables   (Available 17 of the 31 years recorded )
+
+
+# [[[PARTYID]]] - Political party affiliation   (All years Available )
+
+# [[[POLVIEWS]]] - Think of self as liberal or conservative   ( Available 29 of 31 years)
+``` 
+
+```{r}
+class(HAPPY) # Is a data.fraem
+str(HAPPY)
+head(HAPPY, 20)
+tail(HAPPY, 20)
+
+### Things to note from the start
+# HAPPY (Character)
+# YEAR (Integer)
+# AGE (Character) - seems a little weird
+# SEX (Character)
+# MARITAL (Character)
+# DEGREE (Character)
+# FINRELA (character)
+# HEALTH (character)
+# WTSSALL (numeric)
+# PARTYID (character)
+# POLVIEWS (Character)
+
+
+dim(HAPPY)  #62466 Rows and 11 Columns
+
+names(HAPPY)
+
+summary(HAPPY)
+
+80
+
+```
+
