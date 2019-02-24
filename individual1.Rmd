@@ -90,3 +90,41 @@ table(HAPPY$POLVIEWS)   # DETECTED (DK, IAP)
 # No "NA" values were detected.  This was verified above and also by viewing the global enviroment uisng the search bar. 
 
 ```
+
+```{r}
+
+HAPPY[HAPPY == "DK"] <- NA
+HAPPY[HAPPY == "IAP"] <- NA
+HAPPY[HAPPY == "NA"] <- NA  
+
+
+
+#Replace all of the indcated values with NA
+```
+
+
+```{r}
+
+library(dplyr)
+
+glimpse(HAPPY)
+
+```
+
+```{r}
+#is.XXX checks for specific type
+#as.XXX casts to specific type
+
+HAPPY <- HAPPY %>% mutate_if(is.character, as.factor) %>% mutate(AGE = recode(AGE, "89 OR OLDER" = "89")) %>% mutate(AGE = addNA(AGE)) %>% mutate(AGE = as.numeric(levels(AGE)[AGE]))
+
+
+
+
+glimpse(HAPPY) 
+
+```
+
+```{r}
+sum(table(HAPPY$AGE))
+
+```
