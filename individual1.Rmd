@@ -107,7 +107,8 @@ HAPPY[HAPPY == "NA"] <- NA
 
 library(dplyr)
 
-glimpse(HAPPY)
+head(HAPPY, 20)
+tail(HAPPY, 20)
 
 ```
 
@@ -115,16 +116,27 @@ glimpse(HAPPY)
 #is.XXX checks for specific type
 #as.XXX casts to specific type
 
-HAPPY <- HAPPY %>% mutate_if(is.character, as.factor) %>% mutate(AGE = recode(AGE, "89 OR OLDER" = "89")) %>% mutate(AGE = addNA(AGE)) %>% mutate(AGE = as.numeric(levels(AGE)[AGE]))
 
 
+HAPPY$AGE[HAPPY$AGE == "89 OR OLDER"] <- "89"
+HAPPY <- HAPPY %>% mutate_if(is.character, as.factor) %>% mutate(AGE = as.numeric(levels(AGE)[AGE])) %>% mutate(AGE = as.integer(AGE))
 
-
-glimpse(HAPPY) 
+head(HAPPY, 20)
+tail(HAPPY, 20)
 
 ```
 
 ```{r}
-sum(table(HAPPY$AGE))
+
+
+#HAPPY$MARITAL <- reorder(HAPPY[["MARITAL"]], HAPPY$AGE, FUN = mean, na.rm = TRUE)
+
+HAPPY <- reorder(HAPPY$MARITAL, HAPPY$AGE, FUN = mean, na.rm = TRUE)
+
+#HAPPY
+
+
+### HAVING TROUBLE WITH THIS BLOCK OF CODE
 
 ```
+
