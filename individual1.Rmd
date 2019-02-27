@@ -117,26 +117,22 @@ tail(HAPPY, 20)
 #as.XXX casts to specific type
 
 
-
 HAPPY$AGE[HAPPY$AGE == "89 OR OLDER"] <- "89"
-HAPPY <- HAPPY %>% mutate_if(is.character, as.factor) %>% mutate(AGE = as.numeric(levels(AGE)[AGE])) %>% mutate(AGE = as.integer(AGE))
+HAPPY <- HAPPY %>% mutate(HAPPY = factor(HAPPY), AGE = as.numeric(AGE), SEX = factor(SEX), MARITAL = factor(MARITAL), DEGREE = factor(DEGREE), FINRELA = factor(FINRELA), HEALTH = factor(HEALTH), PARTYID = factor(PARTYID), POLVIEWS = factor(POLVIEWS))
 
+str(HAPPY)
 head(HAPPY, 20)
 tail(HAPPY, 20)
 
 ```
-
 ```{r}
 
+sum(summary(HAPPY$MARITAL))
 
-#HAPPY$MARITAL <- reorder(HAPPY[["MARITAL"]], HAPPY$AGE, FUN = mean, na.rm = TRUE)
+HAPPY_MARI_INFO <- HAPPY %>% group_by(MARITAL) %>% summarize(mean_rate_each_level = mean(AGE, na.rm = TRUE))
 
-HAPPY <- reorder(HAPPY$MARITAL, HAPPY$AGE, FUN = mean, na.rm = TRUE)
+HAPPY_MARI_INFO # We see that based on average age, a sensible order would be "NEVER MARRIED", "SEPARATED", "MARRIED", "DIVORCED", and "WIDOWED"
 
-#HAPPY
-
-
-### HAVING TROUBLE WITH THIS BLOCK OF CODE
-
+levels(HAPPY$MARITAL)
+#newlevels <- 
 ```
-
