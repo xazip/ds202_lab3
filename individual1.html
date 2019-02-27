@@ -611,11 +611,23 @@ HAPPY[HAPPY == &quot;NA&quot;] &lt;- NA
 #as.XXX casts to specific type
 
 
-
 HAPPY$AGE[HAPPY$AGE == &quot;89 OR OLDER&quot;] &lt;- &quot;89&quot;
-HAPPY &lt;- HAPPY %&gt;% mutate_if(is.character, as.factor) %&gt;% mutate(AGE = as.numeric(levels(AGE)[AGE])) %&gt;% mutate(AGE = as.integer(AGE))
+HAPPY &lt;- HAPPY %&gt;% mutate(HAPPY = factor(HAPPY), AGE = as.numeric(AGE), SEX = factor(SEX), MARITAL = factor(MARITAL), DEGREE = factor(DEGREE), FINRELA = factor(FINRELA), HEALTH = factor(HEALTH), PARTYID = factor(PARTYID), POLVIEWS = factor(POLVIEWS))
 
-head(HAPPY, 20)</code></pre>
+str(HAPPY)</code></pre>
+<pre><code>## 'data.frame':    62466 obs. of  11 variables:
+##  $ HAPPY   : Factor w/ 3 levels &quot;NOT TOO HAPPY&quot;,..: 1 1 2 1 2 2 1 1 2 2 ...
+##  $ YEAR    : int  1972 1972 1972 1972 1972 1972 1972 1972 1972 1972 ...
+##  $ AGE     : num  23 70 48 27 61 26 28 27 21 30 ...
+##  $ SEX     : Factor w/ 2 levels &quot;FEMALE&quot;,&quot;MALE&quot;: 1 2 1 1 1 2 2 2 1 1 ...
+##  $ MARITAL : Factor w/ 5 levels &quot;DIVORCED&quot;,&quot;MARRIED&quot;,..: 3 2 2 2 2 3 1 3 3 2 ...
+##  $ DEGREE  : Factor w/ 5 levels &quot;BACHELOR&quot;,&quot;GRADUATE&quot;,..: 1 5 3 1 3 3 3 1 3 3 ...
+##  $ FINRELA : Factor w/ 5 levels &quot;ABOVE AVERAGE&quot;,..: 2 1 2 2 1 1 1 2 2 3 ...
+##  $ HEALTH  : Factor w/ 4 levels &quot;EXCELLENT&quot;,&quot;FAIR&quot;,..: 3 2 1 3 3 3 1 3 1 2 ...
+##  $ WTSSALL : num  0.445 0.889 0.889 0.889 0.889 ...
+##  $ PARTYID : Factor w/ 8 levels &quot;IND,NEAR DEM&quot;,..: 1 4 3 4 7 1 1 1 7 7 ...
+##  $ POLVIEWS: Factor w/ 7 levels &quot;CONSERVATIVE&quot;,..: NA NA NA NA NA NA NA NA NA NA ...</code></pre>
+<pre class="r"><code>head(HAPPY, 20)</code></pre>
 <pre><code>##            HAPPY YEAR AGE    SEX       MARITAL         DEGREE
 ## 1  NOT TOO HAPPY 1972  23 FEMALE NEVER MARRIED       BACHELOR
 ## 2  NOT TOO HAPPY 1972  70   MALE       MARRIED LT HIGH SCHOOL
@@ -722,14 +734,24 @@ head(HAPPY, 20)</code></pre>
 ## 62464             MODERATE
 ## 62465 SLGHTLY CONSERVATIVE
 ## 62466 SLGHTLY CONSERVATIVE</code></pre>
-<pre class="r"><code>#HAPPY$MARITAL &lt;- reorder(HAPPY[[&quot;MARITAL&quot;]], HAPPY$AGE, FUN = mean, na.rm = TRUE)
+<pre class="r"><code>sum(summary(HAPPY$MARITAL))</code></pre>
+<pre><code>## [1] 62466</code></pre>
+<pre class="r"><code>HAPPY_MARI_INFO &lt;- HAPPY %&gt;% group_by(MARITAL) %&gt;% summarize(mean_rate_each_level = mean(AGE, na.rm = TRUE))
 
-HAPPY &lt;- reorder(HAPPY$MARITAL, HAPPY$AGE, FUN = mean, na.rm = TRUE)
-
-#HAPPY
-
-
-### HAVING TROUBLE WITH THIS BLOCK OF CODE</code></pre>
+HAPPY_MARI_INFO # We see that based on average age, a sensible order would be &quot;NEVER MARRIED&quot;, &quot;SEPARATED&quot;, &quot;MARRIED&quot;, &quot;DIVORCED&quot;, and &quot;WIDOWED&quot;</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##   MARITAL       mean_rate_each_level
+##   &lt;fct&gt;                        &lt;dbl&gt;
+## 1 DIVORCED                      48.3
+## 2 MARRIED                       46.6
+## 3 NEVER MARRIED                 32.6
+## 4 SEPARATED                     43.5
+## 5 WIDOWED                       70.1
+## 6 &lt;NA&gt;                          52.9</code></pre>
+<pre class="r"><code>levels(HAPPY$MARITAL)</code></pre>
+<pre><code>## [1] &quot;DIVORCED&quot;      &quot;MARRIED&quot;       &quot;NEVER MARRIED&quot; &quot;SEPARATED&quot;    
+## [5] &quot;WIDOWED&quot;</code></pre>
+<pre class="r"><code>#newlevels &lt;- </code></pre>
 </div>
 
 
