@@ -219,3 +219,25 @@ ggplot(HAPPY, aes(x = YEAR, fill = SEX))+
 ```
 
 
+
+
+```{r}
+HAPPY$AGE <- round(HAPPY$AGE, -1)
+table(HAPPY$AGE)
+#ggplot(HAPPY, aes(x = HAPPY, y = YEAR)) +
+  #geom_bar(aes(fill = AGE), stat = "identity", position = "dodge")+
+  #facet_wrap(~FINRELA)
+
+#ggplot(HAPPY, aes(x = HAPPY, y = AGE, color = FINRELA))+
+  #geom_point()+
+  #facet_wrap(~HEALTH)
+
+
+
+pie = ggplot(HAPPY, aes(x = HAPPY, y = AGE, fill = FINRELA))+
+  geom_bar(stat = "identity")+ 
+  coord_polar("y", start = 0)
+
+```
+
+
