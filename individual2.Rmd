@@ -1,0 +1,165 @@
+---
+title: "Lab3 individual2"
+author: "Elaine"
+date: "2/24/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Including Plots
+You can also embed plots, for example:
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r}
+data(happy, package="productplots")
+head(happy)
+
+HAPPY <- readRDS("HAPPY.rds")
+head(HAPPY, 5)
+```
+
+```{r}
+#Variable Info
+# HAPPY: general happiness; 31/31 years available
+# YEAR: 31/31 years available
+# AGE: ages 18 and older; 31/31 years available
+# SEX: gender;31/31 years available
+# MARITAL: marital status; 31/31 years available
+# DEGREE: education level; 31/31 years available
+# FINRELA: income reported; 31/31 years available
+# HEALTH: condition of health; 28/31 years available
+# WTSSALL: weight of variables; 17/31 years available
+# PARTYID: political party affiliation; 31/31 years available
+# POLVIEWS: liberal or conservative?; 29/31 years available
+```
+
+```{r}
+str(HAPPY) # data.frame
+class(HAPPY)
+head(HAPPY, 10)
+
+# All variables are characters except YEAR (int) & WTSSALL (num)
+```
+
+```{r}
+summary(HAPPY)
+str(HAPPY) #62,466 obs of 11 variables
+dim(HAPPY)
+# 62,466 rows x 11 columns
+```
+
+```{r}
+table(HAPPY$HAPPY)
+table(HAPPY$YEAR)
+table(HAPPY$AGE)
+table(HAPPY$SEX)
+table(HAPPY$MARITAL)
+table(HAPPY$DEGREE)
+table(HAPPY$FINRELA)
+table(HAPPY$HEALTH)
+table(HAPPY$WTSSALL)
+table(HAPPY$PARTYID)
+table(HAPPY$POLVIEWS)
+
+HAPPY[HAPPY == 'DK'] <- NA
+HAPPY[HAPPY == 'IAP'] <- NA
+HAPPY[HAPPY == 'NA'] <- NA
+
+```
+
+```{r}
+summary(HAPPY$AGE)
+HAPPY$AGE[HAPPY$AGE == "89 OR OLDER"] <- "89"
+table(HAPPY$AGE)
+str(HAPPY$AGE)
+```
+
+```{r}
+library(dplyr)
+HAPPY <- HAPPY %>%
+  mutate(HAPPY = factor(HAPPY),
+         AGE = as.numeric(AGE),
+         SEX = factor(SEX),
+         MARITAL = factor(MARITAL),
+         DEGREE = factor(DEGREE),
+         FINRELA = factor(FINRELA),
+         HEALTH = factor(HEALTH),
+         PARTYID = factor(PARTYID),
+         POLVIEWS = factor(POLVIEWS))
+
+str(HAPPY$AGE)
+
+#ANDY'S CODE
+sum(summary(HAPPY$MARITAL))
+
+HAPPY_MARI_INFO <- HAPPY %>% group_by(MARITAL) %>% summarize(mean_rate_each_level = mean(AGE, na.rm = TRUE))
+HAPPY_MARI_INFO
+
+lvl_MARITAL_COL <- c("NEVER MARRIED", "SEPARATED", "MARRIED", "DIVORCED", "WIDOWED")
+HAPPY <- HAPPY %>% mutate(MARITAL = factor(MARITAL, lvl_MARITAL_COL))
+HAPPY %>% group_by(MARITAL) %>% summarize(n = n(), mean_age = mean(AGE, na.rm = TRUE)) %>% arrange((mean_age))
+levels(HAPPY$MARITAL)
+
+```
+
+
+```{r}
+levels(HAPPY$HAPPY)
+levels(HAPPY$SEX)
+levels(HAPPY$MARITAL)
+levels(HAPPY$DEGREE)
+levels(HAPPY$FINRELA)
+levels(HAPPY$HEALTH)
+levels(HAPPY$PARTYID)
+```
+
+```{r}
+#REORDER DEGREE COLUMN
+lvl_degree <- c("LT HIGH SCHOOL", "HIGH SCHOOL", "JUNIOR COLLEGE", "BACHELOR", "GRADUATE")
+HAPPY <- HAPPY %>% mutate(DEGREE = factor(DEGREE, lvl_degree))
+levels(HAPPY$DEGREE)
+```
+
+```{r}
+#Reorder FINRELA column
+lvl_finrela <- c("FAR BELOW AVERAGE", "BELOW AVERAGE", "AVERAGE", "ABOVE AVERAGE", "FAR ABOVE AVERAGE")
+HAPPY <- HAPPY %>% mutate(FINRELA = factor(FINRELA, lvl_finrela))
+levels(HAPPY$FINRELA)
+```
+
+```{r}
+#Reorder HEALTH column
+lvl_health <- c("POOR", "FAIR", "GOOD", "EXCELLENT")
+HAPPY <- HAPPY %>% mutate(HEALTH = factor(HEALTH, lvl_health))
+levels(HAPPY$HEALTH)
+```
+
+```{r}
+#Reorder HAPPY column
+lvl_happy <- c("NOT TOO HAPPY", "PRETTY HAPPY", "VERY HAPPY")
+HAPPY <- HAPPY %>% mutate(HAPPY = factor(HAPPY, lvl_happy))
+levels(HAPPY$HAPPY)
+```
+
+```{r}
+library(ggplot2)
+ggplot(HAPPY, aes(x = HAPPY, fill = SEX)) + geom_bar(na.rm=TRUE) +
+  facet_wrap(~HEALTH) +
+  ggtitle("Relationship between Happiness and Sex & Health")
+
+```
+```{r}
+
+
+```
+
+
+```{r}
+#library(ggmosaic)
+#ggplot(data = HAPPY) + geom_mosaic(aes(x = product(FINRELA), fill = SEX)) +
+         facet_grid(HAPPY)
+```
