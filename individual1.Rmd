@@ -173,6 +173,49 @@ levels(HAPPY$HEALTH)
 lvl_FINRELA_COL <- c("FAR BELOW AVERAGE", "BELOW AVERAGE", "AVERAGE", "ABOVE AVERAGE", "FAR ABOVE AVERAGE")
 HAPPY <- HAPPY %>% mutate(FINRELA = factor(FINRELA, lvl_FINRELA_COL))
 levels(HAPPY$FINRELA)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+library(ggplot2)
+
+```
+
+
+# Which gender was recorded more per year?  Male or Females? 
+```{r}
+
+ggplot(HAPPY, aes(x = YEAR, fill = SEX)) +
+  geom_histogram(binwidth = .7, alpha = .7 , position = "identity") +
+  facet_grid(.~SEX)+
+  ggtitle("Which Gender was recorded more/less each year") + xlab("Year Recorded") + ylab("Number of Males and Females") + theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+  
+
+```
+
+
+
+```{r}
+ggplot(HAPPY, aes(x = YEAR, fill = SEX))+
+  geom_density(alpha = .7) + 
+  ggtitle("Density Plot of Male and Females Recorded each Year ")
+
+
 ```
 
 
