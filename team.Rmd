@@ -126,7 +126,7 @@ ggplot(HAPPY, aes(x = YEAR, fill = SEX))+
 
 ```
 
-###### Looking at the graphs, we see the sample size is around 62466, the year the person was recorded was plotted on the x-axis and the number of males and females was plotted on the y-zxis. There were more females recorded than males almost every year. The histogram is multimodal, skewed to the left, and has no apparent outliers; this makes sense due to the large sample size and the long time span from which the observations were taken. 
+###### Looking at the graphs, we see the sample size is around 62466, the year the person was recorded was plotted on the x-axis and the number of males and females was plotted on the y-axis. There were more females recorded than males almost every year. The histogram is multimodal, skewed to the left, and has no apparent outliers; this makes sense due to the large sample size and the long time span from which the observations were taken. 
 
 
 
@@ -141,7 +141,7 @@ ggplot(HAPPY)+
 
 ```
 
-###### Looking at the mosaic plot we can see on average females and males are genrally the most happy when making an "AVERAGE" level income.  Also, females and males who make an "Average" income are also the least happiest. 
+###### Looking at the mosaic plot we can see on average females and males are genrally the most happy when making an "AVERAGE" level income.  Also, females and males who make an "AVERAGE" and "BELOW AVERAGE" income are also the least happiest. The next highest income level seemed to be a tie between "BELOW AVERAGE" and "ABOVE AVERAGE" and they seemed to stay the same throughout each level of happiness.
 
 
 ```{r}
@@ -156,8 +156,8 @@ ggplot(HAPPY, aes(x = HAPPY, y = YEAR, fill = SEX))+
 
 
 ##### 3. What do you learn from the data set?  
-###### This dataset was pretty hard to work with.  Maybe because this was our first time cleaning in r.  It also took us awhile to understand what "leveling factors" really was about.  We found we could get the most logical results when working variables HAPPY, YEAR, AGE, SEX, HEALTH, FINRELA. Working with other factor variables, we couldn't get the best looking results based on the graphs.  We learned how to clean our first data.frame.  This was also a good learning lesson working wiht the dplyr, tidyverse, fct, and ggplot packages. 
+###### This dataset was pretty hard to work with.  Maybe because this was our first time cleaning in r.  It also took us awhile to understand what "leveling factors" really was about.  We found we could get the most logical results when working variables HAPPY, YEAR, AGE, SEX, HEALTH, FINRELA. Working with other factor variables, we couldn't get the best looking results based on the graphs.  We learned how to clean our first data.frame with this lab assignment.  This was also a good learning lesson working with the dplyr, tidyverse, fct, and ggplot packages. 
 
-###### Overall, think the most important thing we learned when working with the HAPPY data set is how important it is to work around errors and not get stuck but also remember that cleaning should take up 80% of the time.  
+###### Overall, think the most important thing we learned when working with the HAPPY data set is how important it is to work around errors and not get stuck but also remember that cleaning should take up 80% of the time.   
 
 
