@@ -11,12 +11,12 @@ knitr::opts_chunk$set(echo = TRUE)
 
 [**Link to Repository**](https://github.com/xazip/ds202_lab3)
 
-### Reproducible Code and Analysis: 
+## Reproducible Code and Analysis: 
 
 
-#### Part one (cleaning)
+### Part one (cleaning)
 
-##### Before we could clean the data.frame, we had to understand it.  Here is a general description of each variable in the data set.
+##### 1. Before we could clean the data.frame, we had to understand it.  Here is a general description of each variable in the data set.
 ```{r}
 HAPPY <- readRDS("HAPPY.rds")
 #head(HAPPY, 5)
@@ -59,7 +59,7 @@ HAPPY[HAPPY == "NA"] <- NA
 ```
 
 
-##### Cast Variables into the right Type
+##### 2. Cast Variables into the right Type
 ```{r}
 library(dplyr)
 
@@ -68,7 +68,7 @@ HAPPY <- HAPPY %>% mutate(HAPPY = factor(HAPPY), AGE = as.numeric(AGE), SEX = fa
 ```
 
 
-##### Bring all levels of factors into a sensible order
+##### 3. Bring all levels of factors into a sensible order
 ```{r}
 
 lvl_MARITAL_COL <- c("NEVER MARRIED", "SEPARATED", "MARRIED", "DIVORCED", "WIDOWED")
@@ -105,22 +105,51 @@ HAPPY <- HAPPY %>% mutate(POLVIEWS = factor(POLVIEWS, lvl_POLVIEWS_COL))
 levels(HAPPY$POLVIEWS)
 ```
 
+### Part 2 (exploration)
 
-##### Investigate the distributions of 2 different variables
+##### 1. Investigate the distributions of 2 different variables
 ```{r}
 library(ggplot2)
 
 ggplot(HAPPY, aes(x = YEAR, fill = SEX)) +
-  geom_histogram(binwidth = .7, alpha = .7 , position = "identity") +
+  geom_histogram(binwidth = .7, alpha = .7 , position = "identity", na.rm = TRUE)+
+  ggtitle("Which Gender was recorded more/less each year") + xlab("Year Recorded") + ylab("Number of Males and Females") + theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+
+ggplot(HAPPY, aes(x = YEAR, fill = SEX)) +
+  geom_histogram(binwidth = .7, alpha = .7 , position = "identity", na.rm = TRUE) +
   facet_grid(.~SEX)+
   ggtitle("Which Gender was recorded more/less each year") + xlab("Year Recorded") + ylab("Number of Males and Females") + theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 
 ggplot(HAPPY, aes(x = YEAR, fill = SEX))+
-  geom_density(alpha = .7) + 
+  geom_density(alpha = .7, na.rm = TRUE) + 
   ggtitle("Density Plot of Male and Females Recorded each Year ")
 
 ```
 
+###### Looking at the graphs, we see the sample size is around 62466, the year the person was recorded was plotted on the x-axis and the number of males and females was plotted on the y-zxis. There were more females recorded than males almost every year. The histogram is multimodal, skewed to the left, and has no apparent outliers; this makes sense due to the large sample size and the long time span from which the observations were taken. 
 
 
 
+
+##### 2. Investigate the relationship between happiness and three other variables in the data
+```{r}
+
+ggplot(HAPPY, aes(x = HAPPY, y = YEAR, fill = SEX))+
+  geom_boxplot(size = 0.7, na.rm = TRUE)+ facet_wrap(~FINRELA)+ coord_flip()+
+  ggtitle("Overall Happiness over the Years per Income ") + xlab("Happiness Level") + ylab("Year Recorded")
+
+```
+
+###### There are some observations we can deduce from the boxplots. The shape of the boxplots based on FINRELA(income) range from skewed right, symmetric, and skewed left.  Overall, it seems that males and females with "far below average income"" are not much less happy throughout the years than males and females with "Average"" to "Far above Average" incomes.  This seems to verify the phrase, "Money can't buy happiness".  
+
+
+```{r}
+#library(tidyverse)
+#library(productplots)
+#(ggmosaic)
+
+#ggplot(HAPPY)+
+  #geom_mosaic(aes(x = product(HAPPY, YEAR), fill = FINRELA), na.rm = TRUE)+
+  #facet_grid(.~SEX)
+
+```
