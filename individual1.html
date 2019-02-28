@@ -402,6 +402,7 @@ names(HAPPY)</code></pre>
 ##                     Mean   :1.0000                                        
 ##                     3rd Qu.:1.0985                                        
 ##                     Max.   :8.7399</code></pre>
+<p>PART 1 #1</p>
 <pre class="r"><code>table(HAPPY$HAPPY)  #CHECK</code></pre>
 <pre><code>## 
 ## NOT TOO HAPPY  PRETTY HAPPY    VERY HAPPY 
@@ -607,6 +608,9 @@ HAPPY[HAPPY == &quot;NA&quot;] &lt;- NA
 ## 62464             MODERATE
 ## 62465 SLGHTLY CONSERVATIVE
 ## 62466 SLGHTLY CONSERVATIVE</code></pre>
+</div>
+<div id="part-1-2" class="section level1">
+<h1>PART 1 #2</h1>
 <pre class="r"><code>#is.XXX checks for specific type
 #as.XXX casts to specific type
 
@@ -734,24 +738,48 @@ str(HAPPY)</code></pre>
 ## 62464             MODERATE
 ## 62465 SLGHTLY CONSERVATIVE
 ## 62466 SLGHTLY CONSERVATIVE</code></pre>
+</div>
+<div id="part-1-3" class="section level1">
+<h1>PART 1 #3</h1>
 <pre class="r"><code>sum(summary(HAPPY$MARITAL))</code></pre>
 <pre><code>## [1] 62466</code></pre>
-<pre class="r"><code>HAPPY_MARI_INFO &lt;- HAPPY %&gt;% group_by(MARITAL) %&gt;% summarize(mean_rate_each_level = mean(AGE, na.rm = TRUE))
+<pre class="r"><code>#HAPPY_MARI_INFO &lt;- HAPPY %&gt;% group_by(MARITAL) %&gt;% summarize(mean_rate_each_level = mean(AGE, na.rm = TRUE))
 
-HAPPY_MARI_INFO # We see that based on average age, a sensible order would be &quot;NEVER MARRIED&quot;, &quot;SEPARATED&quot;, &quot;MARRIED&quot;, &quot;DIVORCED&quot;, and &quot;WIDOWED&quot;</code></pre>
-<pre><code>## # A tibble: 6 x 2
-##   MARITAL       mean_rate_each_level
-##   &lt;fct&gt;                        &lt;dbl&gt;
-## 1 DIVORCED                      48.3
-## 2 MARRIED                       46.6
-## 3 NEVER MARRIED                 32.6
-## 4 SEPARATED                     43.5
-## 5 WIDOWED                       70.1
-## 6 &lt;NA&gt;                          52.9</code></pre>
+#HAPPY_MARI_INFO # We see that based on average age, a sensible order would be &quot;NEVER MARRIED&quot;, &quot;SEPARATED&quot;, &quot;MARRIED&quot;, &quot;DIVORCED&quot;, and &quot;WIDOWED&quot;
+
+lvl_MARITAL_COL &lt;- c(&quot;NEVER MARRIED&quot;, &quot;SEPARATED&quot;, &quot;MARRIED&quot;, &quot;DIVORCED&quot;, &quot;WIDOWED&quot;)
+HAPPY &lt;- HAPPY %&gt;% mutate(MARITAL = factor(MARITAL, lvl_MARITAL_COL))
+
+HAPPY %&gt;% group_by(MARITAL) %&gt;% summarize(n = n(), mean_age = mean(AGE, na.rm = TRUE)) %&gt;% arrange((mean_age))</code></pre>
+<pre><code>## # A tibble: 6 x 3
+##   MARITAL           n mean_age
+##   &lt;fct&gt;         &lt;int&gt;    &lt;dbl&gt;
+## 1 NEVER MARRIED 13167     32.6
+## 2 SEPARATED      2167     43.5
+## 3 MARRIED       33131     46.6
+## 4 DIVORCED       7976     48.3
+## 5 &lt;NA&gt;             25     52.9
+## 6 WIDOWED        6000     70.1</code></pre>
 <pre class="r"><code>levels(HAPPY$MARITAL)</code></pre>
-<pre><code>## [1] &quot;DIVORCED&quot;      &quot;MARRIED&quot;       &quot;NEVER MARRIED&quot; &quot;SEPARATED&quot;    
+<pre><code>## [1] &quot;NEVER MARRIED&quot; &quot;SEPARATED&quot;     &quot;MARRIED&quot;       &quot;DIVORCED&quot;     
 ## [5] &quot;WIDOWED&quot;</code></pre>
-<pre class="r"><code>#newlevels &lt;- </code></pre>
+<pre class="r"><code>lvl_HAPPY_COL &lt;- c(&quot;NOT TOO HAPPY&quot;, &quot;PRETTY HAPPY&quot;, &quot;VERY HAPPY&quot;)
+HAPPY &lt;- HAPPY %&gt;% mutate(HAPPY = factor(HAPPY, lvl_HAPPY_COL))
+levels(HAPPY$HAPPY)</code></pre>
+<pre><code>## [1] &quot;NOT TOO HAPPY&quot; &quot;PRETTY HAPPY&quot;  &quot;VERY HAPPY&quot;</code></pre>
+<pre class="r"><code>lvl_DEGREE_COL &lt;- c(&quot;LT HIGH SCHOOL&quot;, &quot;HIGH SCHOOL&quot;, &quot;BACHELOR&quot;, &quot;GRADUATE&quot;)
+HAPPY &lt;- HAPPY %&gt;% mutate(DEGREE = factor(DEGREE, lvl_DEGREE_COL))
+levels(HAPPY$DEGREE)</code></pre>
+<pre><code>## [1] &quot;LT HIGH SCHOOL&quot; &quot;HIGH SCHOOL&quot;    &quot;BACHELOR&quot;       &quot;GRADUATE&quot;</code></pre>
+<pre class="r"><code>lvl_HEALTH_COL &lt;- c(&quot;POOR&quot;, &quot;FAIR&quot;, &quot;GOOD&quot;, &quot;EXCELLENT&quot;)
+HAPPY &lt;- HAPPY %&gt;% mutate(HEALTH = factor(HEALTH, lvl_HEALTH_COL))
+levels(HAPPY$HEALTH)</code></pre>
+<pre><code>## [1] &quot;POOR&quot;      &quot;FAIR&quot;      &quot;GOOD&quot;      &quot;EXCELLENT&quot;</code></pre>
+<pre class="r"><code>lvl_FINRELA_COL &lt;- c(&quot;FAR BELOW AVERAGE&quot;, &quot;BELOW AVERAGE&quot;, &quot;AVERAGE&quot;, &quot;ABOVE AVERAGE&quot;, &quot;FAR ABOVE AVERAGE&quot;)
+HAPPY &lt;- HAPPY %&gt;% mutate(FINRELA = factor(FINRELA, lvl_FINRELA_COL))
+levels(HAPPY$FINRELA)</code></pre>
+<pre><code>## [1] &quot;FAR BELOW AVERAGE&quot; &quot;BELOW AVERAGE&quot;     &quot;AVERAGE&quot;          
+## [4] &quot;ABOVE AVERAGE&quot;     &quot;FAR ABOVE AVERAGE&quot;</code></pre>
 </div>
 
 
