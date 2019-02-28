@@ -133,6 +133,18 @@ ggplot(HAPPY, aes(x = YEAR, fill = SEX))+
 
 ##### 2. Investigate the relationship between happiness and three other variables in the data
 ```{r}
+library(ggmosaic)
+ggplot(HAPPY)+
+  geom_mosaic(aes(x = product(HAPPY), fill = FINRELA), na.rm = TRUE)+
+  facet_grid(.~SEX) + 
+  ggtitle("Mosaic Plot") + xlab("Happy Level") +ylab("FINRELA(Income)") + theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+
+```
+
+###### Looking at the mosaic plot we can see on average females and males are genrally the most happy when making an "AVERAGE" level income.  Also, females and males who make an "Average" income are also the least happiest. 
+
+
+```{r}
 
 ggplot(HAPPY, aes(x = HAPPY, y = YEAR, fill = SEX))+
   geom_boxplot(size = 0.7, na.rm = TRUE)+ facet_wrap(~FINRELA)+ coord_flip()+
@@ -143,13 +155,4 @@ ggplot(HAPPY, aes(x = HAPPY, y = YEAR, fill = SEX))+
 ###### There are some observations we can deduce from the boxplots. The shape of the boxplots based on FINRELA(income) range from skewed right, symmetric, and skewed left.  Overall, it seems that males and females with "far below average income"" are not much less happy throughout the years than males and females with "Average"" to "Far above Average" incomes.  This seems to verify the phrase, "Money can't buy happiness".  
 
 
-```{r}
-#library(tidyverse)
-#library(productplots)
-#(ggmosaic)
 
-#ggplot(HAPPY)+
-  #geom_mosaic(aes(x = product(HAPPY, YEAR), fill = FINRELA), na.rm = TRUE)+
-  #facet_grid(.~SEX)
-
-```
