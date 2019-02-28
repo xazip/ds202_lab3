@@ -73,6 +73,7 @@ summary(HAPPY)
 
 ```
 
+PART 1 #1
 ```{r}
 
 table(HAPPY$HAPPY)  #CHECK
@@ -111,7 +112,7 @@ head(HAPPY, 20)
 tail(HAPPY, 20)
 
 ```
-
+#PART 1 #2
 ```{r}
 #is.XXX checks for specific type
 #as.XXX casts to specific type
@@ -125,14 +126,53 @@ head(HAPPY, 20)
 tail(HAPPY, 20)
 
 ```
+
+# PART 1 #3 
 ```{r}
 
 sum(summary(HAPPY$MARITAL))
 
-HAPPY_MARI_INFO <- HAPPY %>% group_by(MARITAL) %>% summarize(mean_rate_each_level = mean(AGE, na.rm = TRUE))
+#HAPPY_MARI_INFO <- HAPPY %>% group_by(MARITAL) %>% summarize(mean_rate_each_level = mean(AGE, na.rm = TRUE))
 
-HAPPY_MARI_INFO # We see that based on average age, a sensible order would be "NEVER MARRIED", "SEPARATED", "MARRIED", "DIVORCED", and "WIDOWED"
+#HAPPY_MARI_INFO # We see that based on average age, a sensible order would be "NEVER MARRIED", "SEPARATED", "MARRIED", "DIVORCED", and "WIDOWED"
 
+lvl_MARITAL_COL <- c("NEVER MARRIED", "SEPARATED", "MARRIED", "DIVORCED", "WIDOWED")
+HAPPY <- HAPPY %>% mutate(MARITAL = factor(MARITAL, lvl_MARITAL_COL))
+
+HAPPY %>% group_by(MARITAL) %>% summarize(n = n(), mean_age = mean(AGE, na.rm = TRUE)) %>% arrange((mean_age))
 levels(HAPPY$MARITAL)
-#newlevels <- 
+
 ```
+
+```{r}
+
+lvl_HAPPY_COL <- c("NOT TOO HAPPY", "PRETTY HAPPY", "VERY HAPPY")
+HAPPY <- HAPPY %>% mutate(HAPPY = factor(HAPPY, lvl_HAPPY_COL))
+levels(HAPPY$HAPPY)
+
+```
+
+```{r}
+
+lvl_DEGREE_COL <- c("LT HIGH SCHOOL", "HIGH SCHOOL", "BACHELOR", "GRADUATE")
+HAPPY <- HAPPY %>% mutate(DEGREE = factor(DEGREE, lvl_DEGREE_COL))
+levels(HAPPY$DEGREE)
+
+```
+
+```{r}
+
+lvl_HEALTH_COL <- c("POOR", "FAIR", "GOOD", "EXCELLENT")
+HAPPY <- HAPPY %>% mutate(HEALTH = factor(HEALTH, lvl_HEALTH_COL))
+levels(HAPPY$HEALTH)
+
+```
+
+```{r}
+
+lvl_FINRELA_COL <- c("FAR BELOW AVERAGE", "BELOW AVERAGE", "AVERAGE", "ABOVE AVERAGE", "FAR ABOVE AVERAGE")
+HAPPY <- HAPPY %>% mutate(FINRELA = factor(FINRELA, lvl_FINRELA_COL))
+levels(HAPPY$FINRELA)
+```
+
+
