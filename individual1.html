@@ -767,10 +767,11 @@ HAPPY %&gt;% group_by(MARITAL) %&gt;% summarize(n = n(), mean_age = mean(AGE, na
 HAPPY &lt;- HAPPY %&gt;% mutate(HAPPY = factor(HAPPY, lvl_HAPPY_COL))
 levels(HAPPY$HAPPY)</code></pre>
 <pre><code>## [1] &quot;NOT TOO HAPPY&quot; &quot;PRETTY HAPPY&quot;  &quot;VERY HAPPY&quot;</code></pre>
-<pre class="r"><code>lvl_DEGREE_COL &lt;- c(&quot;LT HIGH SCHOOL&quot;, &quot;HIGH SCHOOL&quot;, &quot;BACHELOR&quot;, &quot;GRADUATE&quot;)
+<pre class="r"><code>lvl_DEGREE_COL &lt;- c(&quot;LT HIGH SCHOOL&quot;, &quot;HIGH SCHOOL&quot;, &quot;JUNIOR COLLEGE&quot;, &quot;BACHELOR&quot;, &quot;GRADUATE&quot;)
 HAPPY &lt;- HAPPY %&gt;% mutate(DEGREE = factor(DEGREE, lvl_DEGREE_COL))
 levels(HAPPY$DEGREE)</code></pre>
-<pre><code>## [1] &quot;LT HIGH SCHOOL&quot; &quot;HIGH SCHOOL&quot;    &quot;BACHELOR&quot;       &quot;GRADUATE&quot;</code></pre>
+<pre><code>## [1] &quot;LT HIGH SCHOOL&quot; &quot;HIGH SCHOOL&quot;    &quot;JUNIOR COLLEGE&quot; &quot;BACHELOR&quot;      
+## [5] &quot;GRADUATE&quot;</code></pre>
 <pre class="r"><code>lvl_HEALTH_COL &lt;- c(&quot;POOR&quot;, &quot;FAIR&quot;, &quot;GOOD&quot;, &quot;EXCELLENT&quot;)
 HAPPY &lt;- HAPPY %&gt;% mutate(HEALTH = factor(HEALTH, lvl_HEALTH_COL))
 levels(HAPPY$HEALTH)</code></pre>
