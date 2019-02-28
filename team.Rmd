@@ -1,5 +1,5 @@
 ---
-title: "Team RMarkdown LAB 3"
+title: "Team Lab 3"
 output: html_document
 ---
 
@@ -7,4 +7,120 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-##Team
+** Team Members: Andrew Maloney & Elain ob **
+
+[**Link to Repository**](https://github.com/xazip/ds202_lab3)
+
+### Reproducible Code and Analysis: 
+
+
+#### Part one (cleaning)
+
+##### Before we could clean the data.frame, we had to understand it.  Here is a general description of each variable in the data set.
+```{r}
+HAPPY <- readRDS("HAPPY.rds")
+#head(HAPPY, 5)
+# Info about  variables, gathered from the gssdata website.
+# HAPPY - General happiness.   (All years available)
+# YEAR - Gss year for this respondent.   (All years available)
+# AGE - Age of the respondent. (All years available)
+# SEX - Respondents sex (All years available)
+# MARITAL - Marital status (All years available)
+# DEGREE - Respondents highest degree   (All years available)
+# FINRELA - Opinion of family income   (All years available)
+# HEALTH - Condition of health   (Available 28 of 31 years recorded)
+# WTSSALL - Weight of variables   (Available 17 of the 31 years recorded )
+# PARTYID - Political party affiliation   (All years Available )
+# POLVIEWS - Think of self as liberal or conservative   ( Available 29 of 31 years)
+```
+
+
+```{r}
+str(HAPPY)
+dim(HAPPY)
+# HAPPY (Character)
+# YEAR (Integer)
+# AGE (Character) - seems a little weird
+# SEX (Character)
+# MARITAL (Character)
+# DEGREE (Character)
+# FINRELA (character)
+# HEALTH (character)
+# WTSSALL (numeric)
+# PARTYID (character)
+# POLVIEWS (Character)
+```
+
+##### Replace all indicated values by value NA.
+```{r}
+HAPPY[HAPPY == "DK"] <- NA
+HAPPY[HAPPY == "IAP"] <- NA
+HAPPY[HAPPY == "NA"] <- NA 
+```
+
+
+##### Cast Variables into the right Type
+```{r}
+library(dplyr)
+
+HAPPY$AGE[HAPPY$AGE == "89 OR OLDER"] <- "89"
+HAPPY <- HAPPY %>% mutate(HAPPY = factor(HAPPY), AGE = as.numeric(AGE), SEX = factor(SEX), MARITAL = factor(MARITAL), DEGREE = factor(DEGREE), FINRELA = factor(FINRELA), HEALTH = factor(HEALTH), PARTYID = factor(PARTYID), POLVIEWS = factor(POLVIEWS))
+```
+
+
+##### Bring all levels of factors into a sensible order
+```{r}
+
+lvl_MARITAL_COL <- c("NEVER MARRIED", "SEPARATED", "MARRIED", "DIVORCED", "WIDOWED")
+HAPPY <- HAPPY %>% mutate(MARITAL = factor(MARITAL, lvl_MARITAL_COL))
+
+HAPPY_MEAN_AGE <- HAPPY %>% group_by(MARITAL) %>% summarize(n = n(), mean_age = mean(AGE, na.rm = TRUE)) %>% arrange((mean_age))
+levels(HAPPY$MARITAL)
+
+HAPPY_MEAN_AGE
+
+
+lvl_HAPPY_COL <- c("NOT TOO HAPPY", "PRETTY HAPPY", "VERY HAPPY")
+HAPPY <- HAPPY %>% mutate(HAPPY = factor(HAPPY, lvl_HAPPY_COL))
+levels(HAPPY$HAPPY)
+
+lvl_DEGREE_COL <- c("LT HIGH SCHOOL", "HIGH SCHOOL", "JUNIOR COLLEGE", "BACHELOR", "GRADUATE")
+HAPPY <- HAPPY %>% mutate(DEGREE = factor(DEGREE, lvl_DEGREE_COL))
+levels(HAPPY$DEGREE)
+
+lvl_HEALTH_COL <- c("POOR", "FAIR", "GOOD", "EXCELLENT")
+HAPPY <- HAPPY %>% mutate(HEALTH = factor(HEALTH, lvl_HEALTH_COL))
+levels(HAPPY$HEALTH)
+
+lvl_FINRELA_COL <- c("FAR BELOW AVERAGE", "BELOW AVERAGE", "AVERAGE", "ABOVE AVERAGE", "FAR ABOVE AVERAGE")
+HAPPY <- HAPPY %>% mutate(FINRELA = factor(FINRELA, lvl_FINRELA_COL))
+levels(HAPPY$FINRELA)
+
+lvl_PARTYID_COL <- unique(c("STRONG REPUBLICAN", "NOT STR REPUBLICAN" ,"IND,NEAR REP", "INDEPENDENT", "IND,NEAR DEM", "NOT STR DEMOCRAT", "STRONG DEMOCRAT", "OTHER")) 
+HAPPY <- HAPPY %>% mutate(PARTYID = factor(PARTYID, lvl_PARTYID_COL))
+levels(HAPPY$PARTYID)
+
+lvl_POLVIEWS_COL <- c("EXTRMLY CONSERVATIVE", "CONSERVATIVE", "SLGHTLY CONSERVATIVE", "MODERATE", "SLIGHTLY LIBERAL", "LIBERAL", "EXTREMELY LIBERAL")
+HAPPY <- HAPPY %>% mutate(POLVIEWS = factor(POLVIEWS, lvl_POLVIEWS_COL))
+levels(HAPPY$POLVIEWS)
+```
+
+
+##### Investigate the distributions of 2 different variables
+```{r}
+library(ggplot2)
+
+ggplot(HAPPY, aes(x = YEAR, fill = SEX)) +
+  geom_histogram(binwidth = .7, alpha = .7 , position = "identity") +
+  facet_grid(.~SEX)+
+  ggtitle("Which Gender was recorded more/less each year") + xlab("Year Recorded") + ylab("Number of Males and Females") + theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+
+ggplot(HAPPY, aes(x = YEAR, fill = SEX))+
+  geom_density(alpha = .7) + 
+  ggtitle("Density Plot of Male and Females Recorded each Year ")
+
+```
+
+
+
+
